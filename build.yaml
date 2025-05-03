@@ -1,0 +1,18 @@
+targets:
+  $default:
+    builders:
+      l10n_key_preview|l10n_key_preview:
+        enabled: true
+        generate_for:
+          - lib/**.dart
+        options:
+          skip_generated: true
+
+builders:
+  l10n_key_preview:
+    import: "package:l10n_key_preview/builder.dart"
+    builder_factories: ["l10nKeyPreviewBuilder"]
+    build_extensions: { ".dart": [".l10n_preview.dart"] }
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["source_gen|combining_builder"]
