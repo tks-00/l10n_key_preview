@@ -1,39 +1,81 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# L10n Key Preview
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+Flutter アプリケーション開発者向けの多言語化支援ツールです。コード内の翻訳キーの横に、対応する日本語訳を直接表示することで、開発時の可読性と効率を向上させます。
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## 特徴
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- **翻訳キーのプレビュー**: コード内の `l10n.keyName` 形式の翻訳キーの横に、対応する日本語訳をコメントとして表示
+- **ビルド時自動生成**: build_runner を使用して自動的にプレビューを生成
+- **非侵襲的**: 元のソースコードを変更せず、プレビュー用の別ファイルを生成
+- **ARB ファイル対応**: 標準的な ARB 形式の翻訳ファイルをサポート
 
-## Features
+## 導入方法
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+1. パッケージを依存関係に追加
 
-## Getting started
+```yaml
+dependencies:
+  l10n_key_preview: ^0.1.0
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+dev_dependencies:
+  build_runner: ^2.4.0
 ```
 
-## Additional information
+2. `build.yaml` ファイルを作成または編集
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```yaml
+targets:
+  $default:
+    builders:
+      l10n_key_preview|l10n_key_preview:
+        enabled: true
+        generate_for:
+          - lib/**.dart
+```
+
+## 使い方
+
+1. ARB 翻訳ファイルを以下のいずれかの場所に配置
+
+   - `lib/l10n/app_ja.arb`
+   - `assets/l10n/app_ja.arb`
+   - `assets/translations/ja.arb`
+
+2. build_runner を実行してプレビューを生成
+
+```bash
+flutter pub run build_runner build
+```
+
+3. 生成されたプレビューファイル (`.preview.dart`) を確認
+
+### 例
+
+元のコード
+
+```dart
+Text(l10n.welcomeMessage)
+```
+
+生成されたプレビュー
+
+```dart
+Text(l10n.welcomeMessage) // ようこそ
+```
+
+## 設定オプション
+
+`build.yaml` ファイルで以下のオプションを設定できます。
+
+```yaml
+targets:
+  $default:
+    builders:
+      l10n_key_preview|l10n_key_preview:
+        options:
+          skip_generated: true
+```
+
+## ライセンス
+
+MIT ライセンスの下で公開されています。
