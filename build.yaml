@@ -12,7 +12,7 @@ builders:
   l10n_key_preview:
     import: "package:l10n_key_preview/builder.dart"
     builder_factories: ["l10nKeyPreviewBuilder"]
-    build_extensions: { ".dart": [".l10n_preview.dart"] }
+    build_extensions: { ".dart": [".preview.dart"] }
     auto_apply: dependents
     build_to: source
     applies_builders: ["source_gen|combining_builder"]

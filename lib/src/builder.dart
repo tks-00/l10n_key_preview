@@ -10,7 +10,7 @@ class L10nKeyPreviewBuilder implements Builder {
 
   @override
   Map<String, List<String>> get buildExtensions => {
-        '.dart': ['.l10n_preview.dart'],
+        '.dart': ['.preview.dart'],
       };
 
   @override
@@ -25,7 +25,7 @@ class L10nKeyPreviewBuilder implements Builder {
     // 生成されたファイルは処理しない
     if (inputId.path.contains('.g.dart') ||
         inputId.path.contains('.freezed.dart') ||
-        inputId.path.contains('.l10n_preview.dart')) {
+        inputId.path.contains('.preview.dart')) {
       return;
     }
 
@@ -39,7 +39,7 @@ class L10nKeyPreviewBuilder implements Builder {
     }
 
     // 出力ファイルのIDを作成
-    final outputId = inputId.changeExtension('.l10n_preview.dart');
+    final outputId = inputId.changeExtension('.preview.dart');
 
     // 出力ファイルに書き込む
     await buildStep.writeAsString(outputId, content);
